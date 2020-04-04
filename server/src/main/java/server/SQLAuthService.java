@@ -11,16 +11,16 @@ public class SQLAuthService implements AuthService {
     public SQLAuthService() {
         try {
             sqlConnection = DriverManager.getConnection("jdbc:sqlite:users.db");
-            System.out.println("база подключена");
-            DriverManager.setLogWriter(logwriter);
-        } catch (SQLException e) {
+            System.out.println("база подключена");    // Здесь подключаемся к базе, но вот где отключаться, я не понимаю.
+            DriverManager.setLogWriter(logwriter);    // Наверное, надо менять точку подключения, переносить в класс Server или ClientHandler
+        } catch (SQLException e) {                    // и там же и отключать потом
             e.printStackTrace();
         }
     }
 
     @Override
-    public String getNicknameByLoginAndPassword(String login, String password) {
-        try {
+    public String getNicknameByLoginAndPassword(String login, String password) { // или подключаться в начале метода и отключаться в конце?
+        try {                                                                    // Но тогда теряется последний return (оказывается после finally)
             PreparedStatement preparedStatement = sqlConnection.prepareStatement("SELECT * FROM users WHERE login = ? AND password = ?");
             preparedStatement.setString(1, login);
             preparedStatement.setString(2, password);

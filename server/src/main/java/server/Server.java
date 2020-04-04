@@ -19,7 +19,7 @@ public class Server {
 
     public Server() {
         clients = new Vector<>();
-        authService = new SQLAuthService();
+        authService = new SQLAuthService(); //Ссылка на новый класс
         ServerSocket server = null;
         Socket socket = null;
 
@@ -28,7 +28,7 @@ public class Server {
             server = new ServerSocket(8189);
             System.out.println("Сервер запущен");
 
-            Class jdbcDriver = Class.forName("org.sqlite.JDBC");
+            Class.forName("org.sqlite.JDBC");
             System.out.println("JDBC-драйвер загружен");
 
             while (true) {
